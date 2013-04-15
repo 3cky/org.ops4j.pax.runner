@@ -8,7 +8,7 @@
   <profile name="tui" extends="minimal">
     <bundle>
       <name>Knopflerfish Log API</name>
-      <url>link:classpath:runner-links/org.knopflerfish.log-api-2.0.1.link</url>
+      <url>link:classpath:runner-links/org.knopflerfish.log-api-2.0.2.link</url>
     </bundle>
     <bundle>
       <name>Knopflerfish Config Admin API</name>
@@ -16,7 +16,7 @@
     </bundle>
     <bundle>
       <name>Knopflerfish Console</name>
-      <url>link:classpath:runner-links/org.knopflerfish.console-all-2.0.1.link</url>
+      <url>link:classpath:runner-links/org.knopflerfish.console-2.0.1.link</url>
     </bundle>
     <bundle>
       <name>Knopflerfish Console TTY</name>

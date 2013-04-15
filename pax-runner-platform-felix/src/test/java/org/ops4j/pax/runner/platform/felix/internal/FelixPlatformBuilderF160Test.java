@@ -17,19 +17,9 @@
  */
 package org.ops4j.pax.runner.platform.felix.internal;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import static org.easymock.EasyMock.*;
 import org.junit.After;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import org.osgi.framework.BundleContext;
 import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
@@ -37,6 +27,14 @@ import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.pax.runner.platform.internal.PlatformContextImpl;
 import org.ops4j.pax.runner.platform.internal.RelativeFilePathStrategy;
+import org.osgi.framework.BundleContext;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+
+import static org.easymock.EasyMock.*;
+import static org.junit.Assert.*;
 
 public class FelixPlatformBuilderF160Test
 {
@@ -96,6 +94,7 @@ public class FelixPlatformBuilderF160Test
     @Test
     public void getRequiredProfilesWithoutConsole()
     {
+        expect( m_configuration.getFrameworkProfile() ).andReturn( null );
         expect( m_configuration.startConsole() ).andReturn( null );
 
         replay( m_bundleContext, m_configuration );
@@ -109,6 +108,36 @@ public class FelixPlatformBuilderF160Test
     @Test
     public void getRequiredProfilesWithConsole()
     {
+        expect( m_configuration.getFrameworkProfile() ).andReturn( null );
+        expect( m_configuration.startConsole() ).andReturn( true );
+
+        replay( m_bundleContext, m_configuration );
+        assertEquals(
+            "Required profiles",
+            "tui",
+            new FelixPlatformBuilderF160( m_bundleContext, "version" ).getRequiredProfile( m_platformContext )
+        );
+        verify( m_bundleContext, m_configuration );
+    }
+
+    @Test
+    public void getRequiredProfilesWithSpecificProfile()
+    {
+        expect( m_configuration.getFrameworkProfile() ).andReturn( "123" );
+
+        replay( m_bundleContext, m_configuration );
+        assertEquals(
+            "Required profiles",
+            "123",
+            new FelixPlatformBuilderF160( m_bundleContext, "version" ).getRequiredProfile( m_platformContext )
+        );
+        verify( m_bundleContext, m_configuration );
+    }
+
+    @Test
+    public void getRequiredProfilesWithDefaultProfile()
+    {
+        expect( m_configuration.getFrameworkProfile() ).andReturn( "runner" );
         expect( m_configuration.startConsole() ).andReturn( true );
 
         replay( m_bundleContext, m_configuration );
@@ -241,7 +270,7 @@ public class FelixPlatformBuilderF160Test
         m_platformContext.setExecutionEnvironment( "EE-1,EE-2" );
         m_platformContext.setSystemPackages( "sys.package.one,sys.package.two" );
         Properties properties = new Properties();
-        properties.setProperty( "myProperty", "myValue" );
+        properties.setProperty( "myProperty", "my Value" );
         m_platformContext.setProperties( properties );
 
         expect( m_configuration.getBootDelegation() ).andReturn( null );
