@@ -79,7 +79,7 @@ org.osgi.framework.system.packages = \
     javax.swing.undo,\
     javax.tools,\
     javax.transaction,\
-    javax.transaction.xa,\
+    javax.transaction.xa;partial=true;mandatory:=partial,\
     javax.xml,\
     javax.xml.bind,\
     javax.xml.bind.annotation,\

@@ -68,7 +68,7 @@ org.osgi.framework.system.packages = \
     javax.swing.tree,\
     javax.swing.undo,\
     javax.transaction,\
-    javax.transaction.xa,\
+    javax.transaction.xa;partial=true;mandatory:=partial,\
     javax.xml,\
     javax.xml.datatype,\
     javax.xml.namespace,\
